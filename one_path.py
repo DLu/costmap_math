@@ -3,7 +3,7 @@ from parser import parse
 
 args = parse()
 
-N = args.size*5
+N = args.size
 fne, argmap = args.fmap
 
 g = make_grid(N, N)

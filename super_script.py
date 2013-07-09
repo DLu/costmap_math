@@ -202,13 +202,22 @@ if __name__=='__main__':
             for m_name, metric in all_metrics:
                 data[m_name].append([])
 
+            maxxed = False
+            last = None
             for v2 in ys:
                 pbar.update(i)
                 i += 1
                 params[param2] = v2
-                g, score, path = super_path(function, args, params)
+                if maxxed:
+                    g, score, path = last
+                else:
+                    g, score, path = super_path(function, args, params)
+                    last = g,score,path
                 for m_name, metric in all_metrics:
-                    data[m_name][-1].append( metric(path, N) )
+                    value = metric(path, N)
+                    if value==0 and m_name=='closest_distance':
+                        maxxed = True
+                    data[m_name][-1].append( value )
 
         pbar.finish()
                     

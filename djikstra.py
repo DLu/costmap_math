@@ -20,7 +20,7 @@ def get_distance(c1, c2):
     return sqrt(pow(c1[0]-c2[0], 2)+pow(c1[1]-c2[1], 2))
 
 def djikstra(grid, start, goal, constant=10, neighbors=0):
-    total = {start: grid[start]}
+    total = {start: 0}
     visited = set()
     current = start
     src = {}
@@ -32,7 +32,8 @@ def djikstra(grid, start, goal, constant=10, neighbors=0):
         for nbor in get_nbors(grid, current, neighbors):
             if nbor in visited or grid[nbor]>=LETHAL:
                 continue
-            d = score + grid[nbor] + constant *get_distance(current, nbor)
+            distance = get_distance(current, nbor)
+            d = score + grid[nbor] * distance/2.0 + grid[current] * distance/2 + constant * distance
             if nbor not in total or total[nbor] > d:
                 total[nbor] = d
                 src[nbor] = current
@@ -56,6 +57,12 @@ def djikstra(grid, start, goal, constant=10, neighbors=0):
     path.reverse()
     return score, path
 
+def plan(grid, start, goal, constant=10, neighbors=0):
+    md = MapDrawer()
+    md.data = grid
+    md.redraw()
+    score, md.path = djikstra(grid, start, goal, constant, neighbors)
+    md.draw()
 
 def make_grid(W,H):
     grid = {}

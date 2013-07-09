@@ -11,7 +11,7 @@ def gaussian(x, y, dx=0, dy=0, A=99, var=100):
     f2 = pow(my, 2.0)/(2.0 * var)
     return A * exp(-(f1 + f2))
     
-CMAP_gaussian = (gaussian, {'A':[0,100,99], 'var':[1,1500,100]})
+CMAP_gaussian = (gaussian, {'A':[0,100,99], 'var':[1,400,100]})
 
 def linear(x, y, dx=0, dy=0, A=99, slope=1, power=2):
     x += dx
