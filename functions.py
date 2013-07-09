@@ -13,6 +13,11 @@ def gaussian(x, y, dx=0, dy=0, A=99, var=100):
     
 CMAP_gaussian = (gaussian, {'A':[0,100,99], 'var':[1,400,100]})
 
+def two_gaussians(x, y, dx=0, dy=0, A1=50, A2=40, var1=100, var2=100):
+    return max(gaussian(x,y,dx,dy,A1,var1) , gaussian(x,y,dx,dy,A2,var2))
+
+CMAP_two_gaussians = (two_gaussians, {'A1':[0,100,50], 'var1':[1,400,100], 'A2':[0,100,40], 'var2':[1,400,100]})
+
 def linear(x, y, dx=0, dy=0, A=99, slope=1, power=2):
     x += dx
     y += dy
