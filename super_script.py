@@ -12,7 +12,7 @@ from progressbar import *
 OTHER_PARAMS = {'P': [0, 60, 50], 'N': [5, 100, 100], 'angle': [0, 90, 0], 
                 'start': [0.0, 0.5, .1], 'goal':[0.1, .5, .1], 'obs':[0.1,0.5,0.5],
                 'eight': [0,1,0], 'resolution': [2, 100, 10], 'resolution2': [2,100,10]}
-SHORTCUT = False
+SHORTCUT = True
 
 WIDE = False
 
@@ -244,6 +244,14 @@ if __name__=='__main__':
             fig = pylab.gcf()
             fig.canvas.set_window_title('%s - %s (%s)'%(cn, desc, cm))
 
-            pylab.show()
+            if False:
+                import os.path
+                for d in range(500):
+                    fn = "heatmap%03d.png"%d
+                    if not os.path.exists(fn):
+                        break
+                    pylab.savefig(fn)
+            else:
+                pylab.show()
     else:
         print "Too Many Unknowns"
