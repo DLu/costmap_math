@@ -9,8 +9,10 @@ import matplotlib
 from collections import defaultdict
 from progressbar import *
 
-OTHER_PARAMS = {'P': [0, 60, 50], 'N': [5, 100, 100], 'angle': [0, 180, 0], 'eight': [0,1,0], 'resolution': [2, 100, 10], 'resolution2': [2,100,10]}
-FRACTION = .1
+OTHER_PARAMS = {'P': [0, 60, 50], 'N': [5, 100, 100], 'angle': [0, 90, 0], 
+                'start': [0.0, 0.5, .1], 'goal':[0.1, .5, .1], 'obs':[0.1,0.5,0.5],
+                'eight': [0,1,0], 'resolution': [2, 100, 10], 'resolution2': [2,100,10]}
+SHORTCUT = False
 
 WIDE = False
 
@@ -63,6 +65,11 @@ def get_args(oargs):
             
     return function, function_name, args, params, unknowns
     
+def fractional_coordinates(N, fraction, angle):
+    radius = N/2 - N * fraction
+    rads = radians(angle)
+    return int(N/2 - cos( rads ) * radius), int(N/2 + sin( rads ) * radius)
+
 def super_path(function, args, params):
     N = int( params['N'] )
     if WIDE:
@@ -76,23 +83,14 @@ def super_path(function, args, params):
         if param in args:
             fn_params[param] = value
             
-    for (i,j) in g:
-        if WIDE:
-            g[ (i,j) ] = function(i,j,dx=-3*N/2, dy=-N/2, **fn_params)
-        else:
-            g[ (i,j) ] = function(i,j,dx=-N/2, dy=-N/2, **fn_params)
-
-    radius = N/2-N*FRACTION
     angle = params.get('angle', 0)
-    s_angle = radians(angle)
-    e_angle = radians(angle + 180)
-    sx = int(N/2 - cos( s_angle ) * radius)
-    sy = int(N/2 + sin( s_angle ) * radius)
-    if WIDE:
-        ex = 3*N-N*FRACTION-1
-    else:
-        ex = int(N/2 - cos( e_angle) * radius)
-    ey = int(N/2 + sin( e_angle ) * radius)
+    sx, sy = fractional_coordinates(N, params.get('start', .1), angle)
+    ex, ey = fractional_coordinates(N, params.get('goal', .1), angle+180)
+    dx, dy = fractional_coordinates(N, params.get('obs', 0.0), angle)
+    for (i,j) in g:
+        g[ (i,j) ] = function(i,j,dx=-dx, dy=-dy, **fn_params)
+
+
     (score, path) = djikstra(g, (sx,sy), (ex,ey), constant=params['P'], neighbors=params['eight'])
     return g, score, path
     
@@ -215,7 +213,7 @@ if __name__=='__main__':
                     last = g,score,path
                 for m_name, metric in all_metrics:
                     value = metric(path, N)
-                    if value==0 and m_name=='closest_distance':
+                    if SHORTCUT and value==0 and m_name=='closest_distance':
                         maxxed = True
                     data[m_name][-1].append( value )
 
@@ -245,7 +243,6 @@ if __name__=='__main__':
             pylab.title('%s: %s\n%s'%(cm, cn, desc))
             fig = pylab.gcf()
             fig.canvas.set_window_title('%s - %s (%s)'%(cn, desc, cm))
-
 
             pylab.show()
     else:
