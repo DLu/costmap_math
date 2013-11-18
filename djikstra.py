@@ -34,7 +34,7 @@ def djikstra(grid, start, goal, constant=10, neighbors=0):
                 continue
             distance = get_distance(current, nbor)
             d = score + grid[nbor] * distance/2.0 + grid[current] * distance/2 + constant * distance
-            if nbor not in total or total[nbor] > d:
+            if nbor not in total or total[nbor] >= d:
                 total[nbor] = d
                 src[nbor] = current
                 heappush(q, (d, nbor))

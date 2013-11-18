@@ -1,6 +1,17 @@
 from math import *
 
+def none(x, y, dx=0, dy=0):
+    x += dx
+    y += dy
+    h = sqrt(x*x+y*y)
+    if h < 6:
+        return 100
+    return 0.0
+
+CMAP_none = (none, {})
+
 def gaussian(x, y, dx=0, dy=0, A=99, var=100):
+    bv = none(x,y,dx,dy)
     x += dx
     y += dy
     h = sqrt(x*x+y*y)
@@ -9,7 +20,7 @@ def gaussian(x, y, dx=0, dy=0, A=99, var=100):
     my = sin(angle) * h
     f1 = pow(mx, 2.0)/(2.0 * var)
     f2 = pow(my, 2.0)/(2.0 * var)
-    return A * exp(-(f1 + f2))
+    return max(A * exp(-(f1 + f2)), bv)
     
 CMAP_gaussian = (gaussian, {'A':[0,100,99], 'var':[1,400,100]})
 
