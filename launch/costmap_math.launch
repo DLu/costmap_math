@@ -1,5 +1,5 @@
 <launch>
     <rosparam command="load" file="$(find costmap_math)/params.yaml"/>
     <node name="global_planner" type="planner" pkg="global_planner" output="screen"/>
-    <node name="rviz" type="rviz" pkg="rviz" args="-d $(find costmap_math)/basic.rviz"/>
+    <node name="rviz" type="rviz" pkg="rviz" args="-d $(find costmap_math)/basic.rviz" respawn="true"/>
 </launch>
