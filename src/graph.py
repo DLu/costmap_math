@@ -25,9 +25,9 @@ xs = sorted(list(xs))
 ys = sorted(list(ys))
 
 
-for i, x in enumerate(xs):
+for j, y in enumerate(ys):
     a = []
-    for j, y in enumerate(ys):
+    for i, x in enumerate(xs):
         K = (key,x,y)
         if K in paths and len(paths[K])>0: 
             path = paths[ K ]
@@ -48,11 +48,11 @@ cbar = pylab.colorbar()
 #cbar.set_label(cm)
 
 pylab.xlabel('Amplitude')
-labels = get_labels(ys)
+labels = get_labels(xs)
 pylab.xticks(labels[0], labels[1]) 
 
 pylab.ylabel('Variance')
-labels = get_labels(xs)
+labels = get_labels(ys)
 pylab.yticks(labels[0], labels[1])
 
 #pylab.title('%s: %s\n%s'%(cm, cn, desc))
@@ -60,31 +60,4 @@ fig = pylab.gcf()
 #fig.canvas.set_window_title('%s - %s (%s)'%(cn, desc, cm))
 
 pylab.show()
-"""
 
-        for v1 in xs:
-            params[param] = v1
-            for m_name, metric in all_metrics:
-                data[m_name].append([])
-
-            maxxed = False
-            last = None
-            for v2 in ys:
-                pbar.update(i)
-                i += 1
-                params[param2] = v2
-                if maxxed:
-                    g, score, path = last
-                else:
-                    g, score, path = super_path(function, args, params)
-                    last = g,score,path
-                for m_name, metric in all_metrics:
-                    value = metric(path, N)
-                    if SHORTCUT and value==0 and m_name=='closest_distance':
-                        maxxed = True
-                    data[m_name][-1].append( value )
-
-        pbar.finish()
-                    
-        
-                """

@@ -38,18 +38,26 @@ class CostmapMath:
             path.append( (pt.pose.position.x, pt.pose.position.y) )
         return path
         
-import pickle
-data = pickle.load(open('data.pickle'))
+import pickle, os.path
+if os.path.exists('data.pickle'):
+    data = pickle.load(open('data.pickle'))
+else:
+    data = {}
 print 'loaded'
 KEY = 'OPEN'
 c = CostmapMath()
-for amp in arange(0, 200, 10):
-    for var in arange(0, 5, 1.5):
-        key = (KEY, amp, var)
+#for amp in arange(0, 200, 5):
+for ratio in arange(0, 2.0, .1):
+    if ratio==0.0:
+        continue
+    amp = 50 / ratio
+    for var in arange(0, 5, .5):
+        key = (KEY, ratio, var)
         if key in data:
             continue
+        print amp, var
         c.params.update_configuration({'amplitude': amp, 'covariance': var})
-        rospy.sleep(1.0)
+        rospy.sleep(.25)
         path = c.plan(4)
         data[key] = path
         
