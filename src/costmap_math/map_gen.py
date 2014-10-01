@@ -5,21 +5,17 @@ from nav_msgs.msg import OccupancyGrid
 
 class MapGen:
     def __init__(self):
-        rospy.init_node('map_gen')
         self.pub = rospy.Publisher('/map', OccupancyGrid, latch=True)
         
-        self.publish()
-        
-    def publish(self):
-        width = 1200
-        height = 200
-        offset = 0.0
+    def publish(self, real_width=10.0, real_height=10.0, offset=0.0, resolution=0.05):
+        width = int(real_width / resolution)
+        height = int(real_height / resolution)
         og = OccupancyGrid()
-        og.info.resolution = 0.05
+        og.info.resolution = resolution
         og.info.width = width
         og.info.height = height
-        og.info.origin.position.x = -width/2 *og.info.resolution
-        og.info.origin.position.y = (-height/2) *og.info.resolution+offset
+        og.info.origin.position.x = -real_width/2
+        og.info.origin.position.y = -real_height/2 + offset
         og.info.origin.orientation.w = 1.0
         og.data = [0] * width * height
         for i in range(width):
@@ -29,6 +25,4 @@ class MapGen:
             og.data[i*width] = 100
             og.data[(i+1)*width-1] = 100
         self.pub.publish(og)
-        
-MapGen()
-rospy.spin()
+
