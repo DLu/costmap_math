@@ -1,8 +1,5 @@
 <launch>
     <rosparam command="load" file="$(find costmap_math)/params.yaml"/>
-    <node name="map_server" type="map_server" pkg="map_server" args="$(find costmap_math)/map.yaml" />
     <node name="global_planner" type="planner" pkg="global_planner" output="screen"/>
-    <node name="static_tf0" type="static_transform_publisher" pkg="tf" args="-4 0 0 0 0 0 /map /base_link 100"/>
     <node name="rviz" type="rviz" pkg="rviz" args="-d $(find costmap_math)/basic.rviz"/>
-    <node name="peeeeeeeople" pkg="people_velocity_tracker" type="static.py" args="4 0 0 0 0 0" />
 </launch>

@@ -4,7 +4,7 @@ import rospy
 import threading
 from people_msgs.msg import Person, People
 
-class VelocityTracker:
+class PeoplePub:
     def __init__(self):
         self.ppub = rospy.Publisher('/people', People)
         self.x = 0.0

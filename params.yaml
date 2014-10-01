@@ -9,4 +9,6 @@ global_planner:
      - {name: static, type: 'costmap_2d::StaticLayer'}
      - {name: social, type: 'social_navigation_layers::ProxemicLayer'}
     publish_frequency: 1.0
+    social:
+        cutoff: 1.0
 
