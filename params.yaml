@@ -1,0 +1,10 @@
+global_planner:
+  costmap:
+    height: 10
+    width: 10
+    resolution: .05
+    origin_x: -5
+    origin_y: -5
+    plugins: 
+     - {name: social, type: 'social_costmap_layers::ProxemicLayer'}
+

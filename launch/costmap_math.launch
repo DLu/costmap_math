@@ -1,0 +1,5 @@
+<launch>
+    <rosparam command="load" file="$(find costmap_math)/params.yaml"/>
+    <node name="global_planner" type="planner" pkg="global_planner" output="screen"/>
+    <node name="static_tf0" type="static_transform_publisher" pkg="tf" args="0 0 0 0 0 0 /map /base_link 100"/>
+</launch>

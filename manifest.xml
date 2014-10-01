@@ -1,0 +1,17 @@
+<package>
+  <description brief="costmap_math">
+
+     costmap_math
+
+  </description>
+  <author>David!!</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/costmap_math</url>
+  <depend package="nav_core"/>
+  <depend package="costmap_2d"/>
+  <depend package="global_planner"/>
+
+</package>
+
+
