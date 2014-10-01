@@ -6,5 +6,7 @@ global_planner:
     origin_x: -5
     origin_y: -5
     plugins: 
-     - {name: social, type: 'social_costmap_layers::ProxemicLayer'}
+     - {name: static, type: 'costmap_2d::StaticLayer'}
+     - {name: social, type: 'social_navigation_layers::ProxemicLayer'}
+    publish_frequency: 1.0
 
