@@ -1,11 +1,6 @@
 from functions import *
-from djikstra import *
-from metrics import all_metrics
-import sys
 import pylab
 import matplotlib
-from collections import defaultdict
-from progressbar import *
 
 N = 50
 g = []
