@@ -11,6 +11,4 @@ global_planner:
     publish_frequency: 1.0
     social:
         cutoff: 1.0
-  planner:
-    use_grid_path: true
-    neutral_cost: 10
+
